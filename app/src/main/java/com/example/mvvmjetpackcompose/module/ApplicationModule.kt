@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.mvvmjetpackcompose.BuildConfig
 
 import com.example.mvvmjetpackcompose.constants.AppConstants
+import com.example.mvvmjetpackcompose.data.local.datastore.DataStoreProvider
 import com.example.mvvmjetpackcompose.data.local.db.AppDao
 import com.example.mvvmjetpackcompose.data.local.db.AppDatabase
 import com.example.mvvmjetpackcompose.data.remote.ApiService
@@ -59,13 +60,17 @@ class ApplicationModule {
 
     @Singleton
     @Provides
+    fun provideDataStoreProvide(@ApplicationContext appContext: Context) = DataStoreProvider(appContext)
+
+    @Singleton
+    @Provides
     fun provideDao(db: AppDatabase) = db.appDao()
 
     @Singleton
     @Provides
     fun provideRepository(apiService: ApiService,
-                          localDataSource: AppDao
+                          localDataSource: AppDao,dataStoreProvider: DataStoreProvider
     ) =
-        MainRepository(apiService, localDataSource)
+        MainRepository(apiService, localDataSource,dataStoreProvider)
 
 }

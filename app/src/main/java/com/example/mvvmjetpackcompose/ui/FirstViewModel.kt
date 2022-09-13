@@ -2,6 +2,7 @@ package com.example.mvvmjetpackcompose.ui
 
 //import androidx.hilt.lifecycle.ViewModelInject
 import android.util.Log
+import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,8 +15,7 @@ import com.example.mvvmjetpackcompose.data.remote.reporitory.MainRepository
 import com.example.mvvmjetpackcompose.utils.NetworkHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
 
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -31,8 +31,14 @@ class FirstViewModel @Inject constructor(
     val postsData: StateFlow<ResourceSealed<PostsResponse>>
         get() = _posts
 
+
+    private val _userName = MutableStateFlow("")
+    val userName: StateFlow<String>
+        get() = _userName
+
     init {
         fetchPostsFromApi()
+        getUserName()
     }
 
     fun fetchPostsFromApi() {
@@ -48,5 +54,23 @@ class FirstViewModel @Inject constructor(
             } else _posts.value = ResourceSealed.Error("No internet connection", null)
         }
     }
+
+    var usrName= mainRepository.getName
+    fun getUserName() {
+        viewModelScope.launch {
+            mainRepository.getName.collectLatest {
+                _userName.value = it
+            }
+        }
+
+    }
+
+    fun setUserName(name:String){
+        viewModelScope.launch {
+            mainRepository.setName(false,name)
+        }
+
+    }
+
 
 }

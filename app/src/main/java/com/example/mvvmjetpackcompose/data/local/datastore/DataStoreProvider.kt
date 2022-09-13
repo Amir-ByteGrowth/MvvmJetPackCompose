@@ -35,7 +35,7 @@ class DataStoreProvider(context: Context) {
 
     //Create a name flow
     val userNameFlow: Flow<String> = dataStore.data.map {
-        it[USER_NAME_KEY] ?: ""
+        it[USER_NAME_KEY] ?: "amir"
     }
 
 
