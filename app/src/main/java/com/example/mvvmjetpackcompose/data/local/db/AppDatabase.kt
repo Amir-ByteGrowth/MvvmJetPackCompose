@@ -5,10 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.mvvmjetpackcompose.constants.AppConstants
+import com.example.mvvmjetpackcompose.data.models.Note
 import com.example.mvvmjetpackcompose.data.models.PostsResponseItem
 
 
-@Database(entities = [PostsResponseItem::class], version = 1, exportSchema = false)
+@Database(entities = [Note::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase(){
 
     abstract fun appDao(): AppDao

@@ -118,4 +118,6 @@ dependencies {
 
     //okhttp3 logging interceptor
     implementation 'com.squareup.okhttp3:logging-interceptor:4.8.1'
+
+    implementation 'androidx.compose.runtime:runtime-livedata:1.0.0-beta01'
 }

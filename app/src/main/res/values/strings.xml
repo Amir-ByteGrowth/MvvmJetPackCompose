@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MvvmJetPackCompose</string>
+    <string name="title_activity_room_screen">RoomScreen</string>
 </resources>
